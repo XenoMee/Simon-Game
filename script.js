@@ -33,28 +33,5 @@ const nextSequence = () => {
 };
 
 const playSound = (currentColor) => {
-  switch (currentColor) {
-    case "green":
-      const greenSound = new Audio("./sounds/green.mp3");
-      greenSound.play();
-      break;
-
-    case "red":
-      const redSound = new Audio("./sounds/red.mp3");
-      redSound.play();
-      break;
-
-    case "yellow":
-      const yellowSound = new Audio("./sounds/yellow.mp3");
-      yellowSound.play();
-      break;
-
-    case "blue":
-      const blueSound = new Audio("./sounds/blue.mp3");
-      blueSound.play();
-      break;
-
-    default:
-      console.log("Unknown color");
-  }
+  const audio = new Audio(`./sounds/${currentColor}.mp3`);
 };

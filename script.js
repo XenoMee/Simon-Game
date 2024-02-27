@@ -21,8 +21,9 @@ buttonsContainer.addEventListener("click", (e) => {
   else {
     const userChosenButton = button.getAttribute("data-color");
     userPattern.push(userChosenButton);
+
     playSound(userChosenButton);
-    flashAnimation(button);
+    animatePress(button);
   }
 });
 
@@ -38,6 +39,7 @@ const nextSequence = () => {
   playSound(randomColor);
 
   //   Add flash animation when the button was randomly chosen
+  flashAnimation(randomButton);
 };
 
 const playSound = (currentColor) => {
@@ -49,5 +51,12 @@ const flashAnimation = (element) => {
   element.classList.add(`flash`);
   setTimeout(() => {
     element.classList.remove(`flash`);
+  }, 100);
+};
+
+const animatePress = (element) => {
+  element.classList.add(`pressed`);
+  setTimeout(() => {
+    element.classList.remove(`pressed`);
   }, 100);
 };

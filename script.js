@@ -6,6 +6,12 @@ let colorChoices = ["green", "red", "yellow", "blue"];
 let gamePattern = [];
 let userPattern = [];
 
+const buttonsContainer = document.querySelector(".container");
+buttonsContainer.addEventListener("click", (e) => {
+  const button = e.target.closest(".btn");
+  if (!button) return;
+});
+
 // Generates a random color from the colorChoices array and adds that color to
 // the game pattern array.
 const randomGeneratedColor = function () {

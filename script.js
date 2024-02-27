@@ -2,13 +2,12 @@
 // TODO: Add generated color to game pattern array
 // TODO: Play sound for the chosen button color
 // TODO: Add flash animation class to chosen button and remove it after 100ms
-// TODO:
+// TODO: Start game sequence if the 'a' key is pressed
 const buttonColors = ["green", "red", "yellow", "blue"];
 const gamePattern = [];
 const userPattern = [];
 
 document.documentElement.addEventListener("keydown", function (e) {
-  console.log(e.key);
   if (e.key === `a`)
     setTimeout(() => {
       nextSequence();
@@ -19,6 +18,11 @@ const buttonsContainer = document.querySelector(".container");
 buttonsContainer.addEventListener("click", (e) => {
   const button = e.target.closest(".btn");
   if (!button) return;
+  else {
+    const userChosenButton = button.getAttribute("data-color");
+    userPattern.push(userChosenButton);
+    // nextSequence();
+  }
 });
 
 // Generates a random color from the buttonColors array and adds that color to

@@ -2,24 +2,37 @@
 // TODO: Create game pattern sequence
 // TODO: Create user pattern sequence
 // TODO: Add sound and animation to the randomly picked buttons
-let colorChoices = ["green", "red", "yellow", "blue"];
-let gamePattern = [];
-let userPattern = [];
+const buttonColors = ["green", "red", "yellow", "blue"];
+const gamePattern = [];
+const userPattern = [];
 
 const buttonsContainer = document.querySelector(".container");
 buttonsContainer.addEventListener("click", (e) => {
   const button = e.target.closest(".btn");
   if (!button) return;
+  nextSequence();
 });
 
-// Generates a random color from the colorChoices array and adds that color to
+// Generates a random color from the buttonColors array and adds that color to
 // the game pattern array.
-const randomGeneratedColor = function () {
-  let randomColor = Math.floor(Math.random() * 4);
-  gamePattern.push(colorChoices[randomColor]);
+const nextSequence = () => {
+  const randomColor = buttonColors[`${Math.floor(Math.random() * 4)}`];
+  const randomButton = document.getElementById(`${randomColor}`);
+
+  //   Push button color to game pattern arrays
+  gamePattern.push(randomColor);
+
+  //   Play sound after the button was chosen
+  playSound(randomColor);
+
+  //   Add flash animation when the game was chosen
+  randomButton.classList.add(`flash`);
+  setTimeout(() => {
+    randomButton.classList.remove(`flash`);
+  }, 100);
 };
 
-const playSound = function (currentColor) {
+const playSound = (currentColor) => {
   switch (currentColor) {
     case "green":
       const greenSound = new Audio("./sounds/green.mp3");

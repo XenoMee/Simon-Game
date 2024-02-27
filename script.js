@@ -21,7 +21,8 @@ buttonsContainer.addEventListener("click", (e) => {
   else {
     const userChosenButton = button.getAttribute("data-color");
     userPattern.push(userChosenButton);
-    nextSequence();
+    playSound(userChosenButton);
+    flashAnimation(button);
   }
 });
 
@@ -30,21 +31,23 @@ buttonsContainer.addEventListener("click", (e) => {
 const nextSequence = () => {
   const randomColor = buttonColors[`${Math.floor(Math.random() * 4)}`];
   const randomButton = document.getElementById(`${randomColor}`);
-
   //   Push button color to game pattern arrays
   gamePattern.push(randomColor);
 
-  //   Play sound after the button was chosen
+  //   Play sound after the button was randomly chosen
   playSound(randomColor);
 
-  //   Add flash animation when the game was chosen
-  randomButton.classList.add(`flash`);
-  setTimeout(() => {
-    randomButton.classList.remove(`flash`);
-  }, 100);
+  //   Add flash animation when the button was randomly chosen
 };
 
 const playSound = (currentColor) => {
   const audio = new Audio(`./sounds/${currentColor}.mp3`);
   audio.play();
+};
+
+const flashAnimation = (element) => {
+  element.classList.add(`flash`);
+  setTimeout(() => {
+    element.classList.remove(`flash`);
+  }, 100);
 };

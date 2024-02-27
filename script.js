@@ -21,7 +21,7 @@ buttonsContainer.addEventListener("click", (e) => {
   else {
     const userChosenButton = button.getAttribute("data-color");
     userPattern.push(userChosenButton);
-    // nextSequence();
+    nextSequence();
   }
 });
 

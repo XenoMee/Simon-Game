@@ -5,13 +5,16 @@
 // TODO: Start game sequence if the 'a' key is pressed
 const buttonColors = ["green", "red", "yellow", "blue"];
 const gamePattern = [];
-const userPattern = [];
+let userPattern = [];
+const hasStarted = false;
+const levelTitleEl = document.getElementById("level-title");
+let level = 0;
 
-document.documentElement.addEventListener("keydown", function (e) {
-  if (e.key === `a`)
-    setTimeout(() => {
-      nextSequence();
-    }, 300);
+document.documentElement.addEventListener("keydown", function () {
+  if (!hasStarted) {
+    nextSequence();
+    hasStarted = true;
+  }
 });
 
 const buttonsContainer = document.querySelector(".container");
@@ -24,6 +27,7 @@ buttonsContainer.addEventListener("click", (e) => {
 
     playSound(userChosenButton);
     animatePress(button);
+    checkAnswer(userPattern.length - 1);
   }
 });
 
@@ -32,6 +36,7 @@ buttonsContainer.addEventListener("click", (e) => {
 const nextSequence = () => {
   const randomColor = buttonColors[`${Math.floor(Math.random() * 4)}`];
   const randomButton = document.getElementById(`${randomColor}`);
+  userPattern = [];
   //   Push button color to game pattern arrays
   gamePattern.push(randomColor);
 
@@ -40,6 +45,9 @@ const nextSequence = () => {
 
   //   Add flash animation when the button was randomly chosen
   flashAnimation(randomButton);
+  level++;
+
+  levelTitleEl.textContent = `Level ${level}`;
 };
 
 const playSound = (currentColor) => {
@@ -59,4 +67,14 @@ const animatePress = (element) => {
   setTimeout(() => {
     element.classList.remove(`pressed`);
   }, 100);
+};
+
+const checkAnswer = (currentLevel) => {
+  if (userPattern[currentLevel] === gamePattern[currentLevel]) {
+    if (userPattern.length === gamePattern.length) {
+      setTimeout(() => {
+        nextSequence;
+      }, 1000);
+    }
+  }
 };

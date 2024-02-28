@@ -10,8 +10,8 @@ const hasStarted = false;
 const levelTitleEl = document.getElementById("level-title");
 let level = 0;
 
-document.documentElement.addEventListener("keydown", function () {
-  if (!hasStarted) {
+document.documentElement.addEventListener("keydown", function (e) {
+  if (!hasStarted && e.key === "a") {
     nextSequence();
     hasStarted = true;
   }
@@ -37,6 +37,9 @@ const nextSequence = () => {
   const randomColor = buttonColors[`${Math.floor(Math.random() * 4)}`];
   const randomButton = document.getElementById(`${randomColor}`);
   userPattern = [];
+  level++;
+  levelTitleEl.textContent = `Level ${level}`;
+
   //   Push button color to game pattern arrays
   gamePattern.push(randomColor);
 
@@ -45,9 +48,6 @@ const nextSequence = () => {
 
   //   Add flash animation when the button was randomly chosen
   flashAnimation(randomButton);
-  level++;
-
-  levelTitleEl.textContent = `Level ${level}`;
 };
 
 const playSound = (currentColor) => {
@@ -62,6 +62,13 @@ const flashAnimation = (element) => {
   }, 100);
 };
 
+const gameOverAnimation = (element) => {
+  element.classList.add(`game-over`);
+  setTimeout(() => {
+    element.classList.remove(`game-over`);
+  }, 100);
+};
+
 const animatePress = (element) => {
   element.classList.add(`pressed`);
   setTimeout(() => {
@@ -73,8 +80,23 @@ const checkAnswer = (currentLevel) => {
   if (userPattern[currentLevel] === gamePattern[currentLevel]) {
     if (userPattern.length === gamePattern.length) {
       setTimeout(() => {
-        nextSequence;
+        nextSequence();
       }, 1000);
     }
+  } else {
+    gameOver();
+    resetGame();
   }
+};
+
+const gameOver = () => {
+  levelTitleEl.textContent = `Game Over!`;
+  playSound("wrong");
+  gameOverAnimation(document.body);
+};
+
+const resetGame = () => {
+  level = 0;
+  gamePattern = [];
+  hasStarted = false;
 };
